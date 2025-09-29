@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes do Produto</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #6a4dcf;
+      --secondary-color: #9b7ffc;
+      --background-color: #f7f5fc;
+      --text-color: #333;
+      --card-bg: #fff;
+      --border-color: #e0e0e0;
+      --shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    body.dark {
+      --background-color: #1a1a1a;
+      --text-color: #f0f0f0;
+      --card-bg: #2a2a2a;
+      --border-color: #444;
+      --shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body {
+      background: var(--background-color);
+      color: var(--text-color);
+      padding-bottom: 70px;
+    }
+
+    header {
+      background: var(--card-bg);
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
+
+    .product-container {
+      padding: 15px;
+    }
+
+    .product-image {
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .product-info {
+      margin-top: 15px;
+    }
+
+    .product-info h1 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: var(--primary-color);
+    }
+
+    .product-price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: var(--secondary-color);
+    }
+
+    .specs {
+      margin: 15px 0;
+      padding: 15px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .specs h3 {
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: var(--primary-color);
+    }
+
+    .specs p {
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    /* Comentários */
+    .comments {
+      margin-top: 20px;
+      padding: 15px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .comments h3 {
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: var(--primary-color);
+    }
+
+    .comment-form textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      resize: none;
+      font-size: 14px;
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+
+    .comment-form button {
+      margin-top: 10px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .comment-form button:hover {
+      background: var(--secondary-color);
+    }
+
+    .comment-list {
+      margin-top: 15px;
+    }
+
+    .comment {
+      padding: 10px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 14px;
+    }
+
+    .comment:last-child {
+      border-bottom: none;
+    }
+
+    /* Menu inferior */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+
+    .bottom-nav a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bottom-nav a i {
+      font-size: 18px;
+      margin-bottom: 3px;
+      color: var(--primary-color);
+    }
+
+    .bottom-nav a.active {
+      color: var(--secondary-color);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">Detalhes</div>
+    <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+  </header>
+
+  <!-- Produto -->
+  <div class="product-container">
+    <img id="productImage" class="product-image" alt="Produto">
+    
+    <div class="product-info">
+      <h1 id="productName"></h1>
+      <div class="product-price" id="productPrice"></div>
+    </div>
+
+    <div class="specs">
+      <h3>Especificações</h3>
+      <p><strong>Tamanhos:</strong> <span id="productSizes"></span></p>
+      <p><strong>Cores:</strong> <span id="productColors"></span></p>
+      <p><strong>Estoque:</strong> <span id="productStock"></span></p>
+    </div>
+
+    <div class="comments">
+      <h3>Comentários</h3>
+      <form class="comment-form" id="commentForm">
+        <textarea id="commentInput" rows="3" placeholder="Escreva seu comentário..."></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+      <div class="comment-list" id="commentList"></div>
+    </div>
+  </div>
+
+  <!-- Menu inferior -->
+  <nav class="bottom-nav">
+    <a href="index.html"><i class="fas fa-home"></i>Home</a>
+    <a href="categorias.html"><i class="fas fa-th-large"></i>Categorias</a>
+    <a href="promocoes.html"><i class="fas fa-tag"></i>Promoções</a>
+    <a href="lancamentos.html"><i class="fas fa-star"></i>Lançamentos</a>
+    <a href="contato.html"><i class="fas fa-user"></i>Contato</a>
+  </nav>
+
+  <script>
+    // Produtos simulados (poderia vir de um backend futuramente)
+    const products = {
+      1: {
+        name: "Camisa Casual",
+        price: "R$ 89,90",
+        image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80",
+        sizes: "P, M, G, GG",
+        colors: "Preto, Branco, Azul",
+        stock: "12 peças disponíveis"
+      },
+      2: {
+        name: "Jaqueta Leve",
+        price: "R$ 129,90",
+        image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=600&q=80",
+        sizes: "M, G",
+        colors: "Verde, Preto",
+        stock: "8 peças disponíveis"
+      },
+      3: {
+        name: "Vestido Elegante",
+        price: "R$ 199,90",
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80",
+        sizes: "P, M, G",
+        colors: "Vermelho, Azul",
+        stock: "5 peças disponíveis"
+      }
+    };
+
+    // Pega ID da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
+
+    // Pega o produto
+    const product = products[productId];
+    if (product) {
+      document.getElementById("productName").textContent = product.name;
+      document.getElementById("productPrice").textContent = product.price;
+      document.getElementById("productImage").src = product.image;
+      document.getElementById("productSizes").textContent = product.sizes;
+      document.getElementById("productColors").textContent = product.colors;
+      document.getElementById("productStock").textContent = product.stock;
+    } else {
+      document.querySelector(".product-container").innerHTML = "<p>Produto não encontrado.</p>";
+    }
+
+    // Dark/Light Mode
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('i');
+
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark');
+      themeIcon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      if (document.body.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        localStorage.setItem('theme', 'light');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      }
+    });
+
+    // Comentários
+    const commentForm = document.getElementById('commentForm');
+    const commentInput = document.getElementById('commentInput');
+    const commentList = document.getElementById('commentList');
+    const savedComments = JSON.parse(localStorage.getItem(`comments-${productId}`)) || [];
+
+    savedComments.forEach(c => addCommentToDOM(c));
+
+    commentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = commentInput.value.trim();
+      if (text) {
+        addCommentToDOM(text);
+        savedComments.push(text);
+        localStorage.setItem(`comments-${productId}`, JSON.stringify(savedComments));
+        commentInput.value = "";
+      }
+    });
+
+    function addCommentToDOM(text) {
+      const div = document.createElement("div");
+      div.classList.add("comment");
+      div.textContent = text;
+      commentList.appendChild(div);
+    }
+  </script>
+</body>
+</html>
